@@ -4,6 +4,8 @@ import 'package:wechat_flutter/pages/friends/index_bar.dart';
 import 'friends_data.dart';
 import 'package:wechat_flutter/consts.dart';
 
+import 'friends_data.dart';
+
 class FriendsPage extends StatefulWidget {
   @override
   _FriendsPageState createState() => _FriendsPageState();
@@ -11,16 +13,41 @@ class FriendsPage extends StatefulWidget {
 
 class _FriendsPageState extends State<FriendsPage> {
 
+  final Map _groupOffsetMap = {
+    INDEX_WORDS[0]:0.0,
+    INDEX_WORDS[1]:0.0,
+
+  };
+  ScrollController _scrollController;
   final List<Friends> _listDatas = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _scrollController = ScrollController();
     _listDatas.addAll(datas);
     _listDatas.addAll(datas);
 //    _listDatas..addAll(datas);
     //排序
     _listDatas.sort((Friends a, Friends b) => a.indexLetter.compareTo(b.indexLetter) );
+
+    var _groupOffset = 44.5 * 4;
+    //经过循环计算，将每个头的位置算出来，放入字典！
+    for (int i=0;i < _listDatas.length;i ++){
+      if (i < 1) {
+        //第一个cell
+        _groupOffsetMap.addAll({_listDatas[i].indexLetter: _groupOffset});
+        //保存完，在加groupOffset，有头部，需要加头部高度
+        _groupOffset += 84.5;
+      }else if (_listDatas[i].indexLetter == _listDatas[i-1].indexLetter){
+        //没有头部，加偏移量
+        _groupOffset += 44.5;
+      }else {
+        _groupOffsetMap.addAll({_listDatas[i].indexLetter: _groupOffset});
+        _groupOffset += 44.5;
+      }
+    }
+
   }
 
   final headerModel = [Friends(name: "新的朋友",imageUrl: "images/新的朋友.png"),
@@ -68,10 +95,18 @@ class _FriendsPageState extends State<FriendsPage> {
           Container(
             color: WeChatThemeColor,
             child: ListView.builder(
+                controller: _scrollController,
                 itemCount: headerModel.length + _listDatas.length,
                 itemBuilder: _itemForRow),
           ),
-          IndexBar(),//悬浮控件(索引)
+          IndexBar(indexBarCallBack: (String str){
+            //offset需要计算
+            if (_groupOffsetMap[str] != null) {
+              _scrollController.animateTo(
+                  _groupOffsetMap[str], duration: Duration(microseconds: 100),
+                  curve: Curves.easeIn);
+            }
+          },),//悬浮控件(索引)
         ],
       ),
       /*
