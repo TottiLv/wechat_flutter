@@ -68,6 +68,18 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "http",
+      "rootUri": "file:///opt/flutter/.pub-cache/hosted/pub.flutter-io.cn/http-0.12.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.4"
+    },
+    {
+      "name": "http_parser",
+      "rootUri": "file:///opt/flutter/.pub-cache/hosted/pub.flutter-io.cn/http_parser-3.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.3"
+    },
+    {
       "name": "image",
       "rootUri": "file:///opt/flutter/.pub-cache/hosted/pub.flutter-io.cn/image-2.1.12",
       "packageUri": "lib/",
@@ -90,6 +102,12 @@
       "rootUri": "file:///opt/flutter/.pub-cache/hosted/pub.flutter-io.cn/path-1.6.4",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "pedantic",
+      "rootUri": "file:///opt/flutter/.pub-cache/hosted/pub.flutter-io.cn/pedantic-1.9.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "petitparser",
@@ -170,7 +188,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2020-07-07T03:36:40.438390Z",
+  "generated": "2020-07-08T06:12:01.099494Z",
   "generator": "pub",
   "generatorVersion": "2.8.4"
 }

@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         highlightColor: Color.fromRGBO(1, 0, 0, 0.0),//控制页面按下色值
         splashColor: Color.fromRGBO(1, 0, 0, 0.0),//控制波纹色值
+        cardColor: Color.fromRGBO(1, 1, 1, 0.65),
         primarySwatch: Colors.blue,
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
