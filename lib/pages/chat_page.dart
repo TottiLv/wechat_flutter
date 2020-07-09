@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:wechat_flutter/consts.dart';
-import 'package:http/http.dart' as http;
+import 'package:wechat_flutter/tools/http_manager.dart';
 
 
 
@@ -12,7 +12,6 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
 
-  bool _cancelConnect = false;
   List<Chat> _datas = [];
 
   @override
@@ -20,30 +19,28 @@ class _ChatPageState extends State<ChatPage> {
     // TODO: implement initState
     super.initState();
     getData().then((List<Chat> datas) {
-      if (!_cancelConnect) {
         setState(() {
           _datas = datas;
         });
-      }
     }).catchError((onError){
 
     }).whenComplete(() {
 
-    }).timeout(Duration(seconds: 6))
-    .catchError((timeout) {
-      _cancelConnect = true;
-      print('超时输出:$timeout');
     });
+//        .timeout(Duration(seconds: 6))
+//    .catchError((timeout) {
+//      _cancelConnect = true;
+//      print('超时输出:$timeout');
+//    });
   }
 
   Future<List<Chat>> getData() async{
-    _cancelConnect = false;
-    final response = await http.get("http://rap2.taobao.org:38080/app/mock/260290/api/chat/list");
+    final response = await get("http://rap2.taobao.org:38080/app/mock/260290/api/chat/list",timeOut: 100);
     if (response.statusCode == 200){
       //获取相应数据，并转成Map
-      final responseMap = json.decode(response.body);
+//      final responseMap = json.decode(response.body);
       //转模型数组
-      List<Chat> chatList = responseMap["chat_list"].map<Chat>((item){
+      List<Chat> chatList = response.data["chat_list"].map<Chat>((item){
         return Chat.fromJson(item);
       }).toList();
       return chatList;
