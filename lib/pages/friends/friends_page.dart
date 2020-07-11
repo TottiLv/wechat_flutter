@@ -11,7 +11,7 @@ class FriendsPage extends StatefulWidget {
   _FriendsPageState createState() => _FriendsPageState();
 }
 
-class _FriendsPageState extends State<FriendsPage> {
+class _FriendsPageState extends State<FriendsPage> with AutomaticKeepAliveClientMixin{
 
   final Map _groupOffsetMap = {
     INDEX_WORDS[0]:0.0,
@@ -69,7 +69,7 @@ class _FriendsPageState extends State<FriendsPage> {
 
   @override
   Widget build(BuildContext context) {
-
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: WeChatThemeColor,
@@ -119,6 +119,12 @@ class _FriendsPageState extends State<FriendsPage> {
        */
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+
+
 }
 
 class _FriendsCell extends StatelessWidget {

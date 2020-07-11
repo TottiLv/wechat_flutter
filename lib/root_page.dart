@@ -11,11 +11,21 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int _currentIndex = 0;
+  final PageController _controller = PageController(initialPage: 0);
   List<Widget> _pages = [ChatPage(), FriendsPage(),DiscoverPage(),MinePage()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex],
+      body: PageView(
+        onPageChanged: (int index){
+          _currentIndex = index;
+          setState(() {
+          });
+        },
+//        physics: NeverScrollableScrollPhysics(),//禁止滚动
+        controller: _controller,
+        children: _pages,
+      ),
       //BottomNavigationBar的使用，需要设置type
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 12,
@@ -23,6 +33,7 @@ class _RootPageState extends State<RootPage> {
           setState(() {
             _currentIndex= index;
           });
+          _controller.jumpToPage(index);
         },
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,

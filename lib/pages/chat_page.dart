@@ -10,7 +10,7 @@ class ChatPage extends StatefulWidget {
   _ChatPageState createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
 
   List<Chat> _datas = [];
 
@@ -61,6 +61,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: WeChatThemeColor,
@@ -113,6 +114,11 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+//  bool get wantKeepAlive => throw UnimplementedError();
+  bool get wantKeepAlive => true;
 }
 
 
