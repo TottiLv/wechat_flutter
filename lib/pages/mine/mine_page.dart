@@ -1,5 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:wechat_flutter/pages/discover/discover_cell.dart';
 
 class MinePage extends StatefulWidget {
@@ -8,6 +10,24 @@ class MinePage extends StatefulWidget {
 }
 
 class _MinePageState extends State<MinePage> {
+  File _avataFile;
+
+  void _pickImage() async {
+    PickedFile file = await ImagePicker().getImage(source: ImageSource.gallery);
+    setState(() {
+      _avataFile = File(file.path);
+    });
+  }
+  /*
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
+  */
+
   Widget headerWidget (){
     return Container(
       color: Colors.white,
@@ -17,8 +37,9 @@ class _MinePageState extends State<MinePage> {
         child: Container(
           child: Row(
             children: <Widget>[
-              //头像
-              Container(
+              GestureDetector(
+                onTap: _pickImage,
+                child: Container(
                 margin: EdgeInsets.only(left: 10),
                 /*
                 //装饰器：添加圆角、边框、阴影等效果;
@@ -31,9 +52,11 @@ class _MinePageState extends State<MinePage> {
                 //如果是图片，需要把图片放入到decoration中
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  image: DecorationImage(image: AssetImage("images/lvjianxiong.png"),fit: BoxFit.fill),
+                  image: DecorationImage(image: _avataFile == null ? AssetImage("images/lvjianxiong.png") : FileImage(_avataFile),fit: BoxFit.fill),
                 ),
-              ),
+              ),),
+              //头像
+
               //右侧
               Container(
                 width: MediaQuery.of(context).size.width - 80,
